@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 const langs = ['en', 'ja'] as const;
 export const Lang = z.enum(langs);
+export const FixedFieldsList = z.array(z.string());
 
 export const Size = z.object({ height: z.number(), width: z.number() });
 
@@ -73,6 +74,7 @@ const CommonOptions = z.object({ font: Font.optional() });
 export const CommonProps = z.object({
   template: Template,
   options: CommonOptions.optional(),
+  fixedFieldsList: FixedFieldsList.optional(),
 });
 
 // -------------------generate-------------------
@@ -88,7 +90,10 @@ export const GenerateProps = CommonProps.extend({
 
 // ---------------------------------------------
 
-export const UIOptions = CommonOptions.extend({ lang: Lang.optional() });
+export const UIOptions = CommonOptions.extend({
+  lang: Lang.optional(),
+  fixedFieldsList: FixedFieldsList.optional(),
+});
 
 const HTMLElementSchema: z.ZodSchema<HTMLElement> = z.any().refine((v) => v instanceof HTMLElement);
 

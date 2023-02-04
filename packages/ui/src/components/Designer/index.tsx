@@ -29,6 +29,7 @@ const TemplateEditor = ({
   size,
   onSaveTemplate,
   onChangeTemplate,
+  fixedFieldsList,
 }: DesignerReactProps & { onChangeTemplate: (t: Template) => void }) => {
   const copiedSchemas = useRef<SchemaForUI[] | null>(null);
   const past = useRef<SchemaForUI[][]>([]);
@@ -262,6 +263,7 @@ const TemplateEditor = ({
         }}
         onEditEnd={onEditEnd}
         addSchema={addSchema}
+        fixedFieldsList={fixedFieldsList}
       />
       <Main
         ref={mainRef}

@@ -19,6 +19,7 @@ export type SidebarProps = {
   onEditEnd: () => void;
   changeSchemas: (objs: { key: string; value: string | number; schemaId: string }[]) => void;
   addSchema: () => void;
+  fixedFieldsList: string[] | undefined;
 };
 
 const Sidebar = (props: SidebarProps) => {
@@ -108,9 +109,9 @@ const Sidebar = (props: SidebarProps) => {
             <button
               style={{
                 padding: '0.5rem',
-                background: '#18a0fb',
+                background: '#1188aa',
                 border: 'none',
-                borderRadius: 2,
+                borderRadius: 6,
                 cursor: 'pointer',
               }}
               onClick={addSchema}

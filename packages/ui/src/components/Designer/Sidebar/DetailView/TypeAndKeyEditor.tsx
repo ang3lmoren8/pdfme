@@ -11,10 +11,20 @@ const ErrorLabel = ({ isError, msg }: { isError: boolean; msg: string }) => (
   </span>
 );
 
+const selectStyle = {
+  width: '100%',
+  border: '1px solid #767676',
+  borderRadius: 2,
+  color: '#333',
+  background: 'none',
+};
+
 const TypeAndKeyEditor = (
-  props: Pick<SidebarProps, 'schemas' | 'changeSchemas'> & { activeSchema: SchemaForUI }
+  props: Pick<SidebarProps, 'schemas' | 'changeSchemas' | 'fixedFieldsList'> & {
+    activeSchema: SchemaForUI;
+  }
 ) => {
-  const { changeSchemas, activeSchema, schemas } = props;
+  const { changeSchemas, activeSchema, schemas, fixedFieldsList } = props;
   const i18n = useContext(I18nContext);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,52 +43,69 @@ const TypeAndKeyEditor = (
   const hasSameKey = getHasSameKey();
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <div>
-        <label style={{ marginBottom: 0 }}>{i18n('type')}</label>
-        <select
-          style={{
-            width: '100%',
-            border: '1px solid #767676',
-            borderRadius: 2,
-            color: '#333',
-            background: 'none',
-          }}
-          onChange={(e) =>
-            changeSchemas([{ key: 'type', value: e.target.value, schemaId: activeSchema.id }])
-          }
-          value={activeSchema.type}
-        >
-          {schemaTypes.map((t) => (
-            <option key={t} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label style={{ marginBottom: 0 }}>
-          {i18n('fieldName')}
-          <u style={{ fontSize: '0.7rem' }}>
-            (<ErrorLabel msg={i18n('require')} isError={blankKey} />+
-            <ErrorLabel msg={i18n('uniq')} isError={hasSameKey} />)
-          </u>
-        </label>
-
-        <input
-          ref={inputRef}
-          onChange={(e) =>
-            changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
-          }
-          style={{
-            width: '100%',
-            border: '1px solid #767676',
-            borderRadius: 2,
-            color: '#333',
-            background: hasSameKey || blankKey ? '#ffa19b' : 'none',
-          }}
-          value={activeSchema.key}
-        />
+    <div>
+      {fixedFieldsList && fixedFieldsList?.length > 0 && (
+        <div style={{ marginBottom: '12px' }}>
+          <label style={{ marginBottom: 0 }}>
+            {i18n('fieldName')}
+            <u style={{ fontSize: '0.7rem' }}>
+              (<ErrorLabel msg={i18n('require')} isError={blankKey} />+
+              <ErrorLabel msg={i18n('uniq')} isError={hasSameKey} />)
+            </u>
+          </label>
+          <select
+            style={selectStyle}
+            value={activeSchema.key}
+            onChange={(e) =>
+              changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
+            }
+          >
+            {fixedFieldsList.map((fixedField) => (
+              <option key={fixedField}>{fixedField}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div>
+          <label style={{ marginBottom: 0 }}>{i18n('type')}</label>
+          <select
+            style={selectStyle}
+            onChange={(e) =>
+              changeSchemas([{ key: 'type', value: e.target.value, schemaId: activeSchema.id }])
+            }
+            value={activeSchema.type}
+          >
+            {schemaTypes.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label style={{ marginBottom: 0 }}>
+            {i18n('fieldName')}
+            <u style={{ fontSize: '0.7rem' }}>
+              (<ErrorLabel msg={i18n('require')} isError={blankKey} />+
+              <ErrorLabel msg={i18n('uniq')} isError={hasSameKey} />)
+            </u>
+          </label>
+          <input
+            ref={inputRef}
+            onChange={(e) =>
+              changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
+            }
+            style={{
+              width: '100%',
+              border: '1px solid #767676',
+              borderRadius: 2,
+              color: '#333',
+              background: hasSameKey || blankKey ? '#ffa19b' : 'none',
+            }}
+            value={activeSchema.key}
+          />
+        </div>
       </div>
     </div>
   );

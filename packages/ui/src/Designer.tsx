@@ -12,7 +12,9 @@ class Designer extends BaseUIClass {
   private onChangeTemplateCallback?: (template: Template) => void;
 
   constructor(props: DesignerProps) {
+    console.log('props', props);
     super(props);
+
     checkDesignerProps(props);
 
     this.render();
@@ -63,6 +65,7 @@ class Designer extends BaseUIClass {
               }
             }}
             size={this.size}
+            fixedFieldsList={this.fixedFieldsList}
           />
         </FontContext.Provider>
       </I18nContext.Provider>,

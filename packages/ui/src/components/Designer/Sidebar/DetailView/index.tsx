@@ -9,7 +9,10 @@ import PositionAndSizeEditor from './PositionAndSizeEditor';
 import TypeAndKeyEditor from './TypeAndKeyEditor';
 
 const DetailView = (
-  props: Pick<SidebarProps, 'schemas' | 'pageSize' | 'changeSchemas' | 'activeElements'> & {
+  props: Pick<
+    SidebarProps,
+    'schemas' | 'pageSize' | 'changeSchemas' | 'activeElements' | 'fixedFieldsList'
+  > & {
     activeSchema: SchemaForUI;
   }
 ) => {

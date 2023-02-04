@@ -65,6 +65,8 @@ export abstract class BaseUIClass {
 
   private font: Font = getDefaultFont();
 
+  protected fixedFieldsList: string[] = [];
+
   private readonly setSize = debounce(() => {
     if (!this.domContainer) throw Error(DESTROYED_ERR_MSG);
     this.size = {
@@ -80,7 +82,7 @@ export abstract class BaseUIClass {
     checkUIProps(props);
 
     const { domContainer, template, options } = props;
-    const { lang, font } = options || {};
+    const { lang, font, fixedFieldsList } = options || {};
     this.domContainer = domContainer;
     this.template = generateColumnsAndSampledataIfNeeded(cloneDeep(template));
     this.size = {
@@ -94,6 +96,10 @@ export abstract class BaseUIClass {
     }
     if (font) {
       this.font = font;
+    }
+
+    if (fixedFieldsList) {
+      this.fixedFieldsList = fixedFieldsList;
     }
   }
 

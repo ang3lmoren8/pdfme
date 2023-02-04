@@ -313,7 +313,7 @@ const Main = (props: Props, ref: Ref<HTMLDivElement>) => {
             onChangeHoveringSchemaId={onChangeHoveringSchemaId}
             editable={editing && activeElements.map((ae) => ae.id).includes(schema.id)}
             onChange={(value) => changeSchemas([{ key: 'data', value, schemaId: schema.id }])}
-            border={hoveringSchemaId === schema.id ? '1px solid #18a0fb' : '1px dashed #4af'}
+            border={hoveringSchemaId === schema.id ? '1px solid #1188aa' : '1px dashed #4af'}
             ref={inputRef}
           />
         )}
