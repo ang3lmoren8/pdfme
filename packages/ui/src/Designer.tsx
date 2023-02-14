@@ -66,6 +66,7 @@ class Designer extends BaseUIClass {
             }}
             size={this.size}
             fixedFieldsList={this.fixedFieldsList}
+            customKeySelect={this.customKeySelect}
           />
         </FontContext.Provider>
       </I18nContext.Provider>,

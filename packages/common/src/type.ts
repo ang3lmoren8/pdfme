@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import {
   Lang,
-  FixedFieldsList,
   Size,
   Alignment,
   barcodeSchemaTypes,
@@ -36,7 +35,6 @@ export const isBarcodeSchema = (arg: CommonSchema): arg is BarcodeSchema =>
   barcodeSchemaTypes.map((t) => t as string).includes(arg.type);
 
 export type Lang = z.infer<typeof Lang>;
-export type FixedFieldsList = z.infer<typeof FixedFieldsList>;
 export type Size = z.infer<typeof Size>;
 export type Alignment = z.infer<typeof Alignment>;
 export type SchemaType = z.infer<typeof SchemaType>;

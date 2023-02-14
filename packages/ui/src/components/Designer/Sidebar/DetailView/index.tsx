@@ -11,7 +11,12 @@ import TypeAndKeyEditor from './TypeAndKeyEditor';
 const DetailView = (
   props: Pick<
     SidebarProps,
-    'schemas' | 'pageSize' | 'changeSchemas' | 'activeElements' | 'fixedFieldsList'
+    | 'schemas'
+    | 'pageSize'
+    | 'changeSchemas'
+    | 'activeElements'
+    | 'fixedFieldsList'
+    | 'customKeySelect'
   > & {
     activeSchema: SchemaForUI;
   }

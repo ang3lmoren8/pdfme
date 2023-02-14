@@ -17,6 +17,7 @@ import {
   checkUIOptions,
   checkPreviewProps,
 } from '@pdfme/common';
+import { ReactNode } from 'react';
 
 const generateColumnsAndSampledataIfNeeded = (template: Template) => {
   const { schemas, columns, sampledata } = template;
@@ -66,6 +67,7 @@ export abstract class BaseUIClass {
   private font: Font = getDefaultFont();
 
   protected fixedFieldsList: string[] = [];
+  protected customKeySelect: ReactNode = null;
 
   private readonly setSize = debounce(() => {
     if (!this.domContainer) throw Error(DESTROYED_ERR_MSG);
@@ -82,7 +84,7 @@ export abstract class BaseUIClass {
     checkUIProps(props);
 
     const { domContainer, template, options } = props;
-    const { lang, font, fixedFieldsList } = options || {};
+    const { lang, font, fixedFieldsList, customKeySelect } = options || {};
     this.domContainer = domContainer;
     this.template = generateColumnsAndSampledataIfNeeded(cloneDeep(template));
     this.size = {
@@ -100,6 +102,10 @@ export abstract class BaseUIClass {
 
     if (fixedFieldsList) {
       this.fixedFieldsList = fixedFieldsList;
+    }
+
+    if (customKeySelect) {
+      this.customKeySelect = customKeySelect;
     }
   }
 

@@ -20,11 +20,17 @@ const selectStyle = {
 };
 
 const TypeAndKeyEditor = (
-  props: Pick<SidebarProps, 'schemas' | 'changeSchemas' | 'fixedFieldsList'> & {
+  props: Pick<SidebarProps, 'schemas' | 'changeSchemas' | 'fixedFieldsList' | 'customKeySelect'> & {
     activeSchema: SchemaForUI;
   }
 ) => {
-  const { changeSchemas, activeSchema, schemas, fixedFieldsList } = props;
+  const {
+    changeSchemas,
+    activeSchema,
+    schemas,
+    fixedFieldsList,
+    customKeySelect: CustomKeySelect,
+  } = props;
   const i18n = useContext(I18nContext);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,6 +50,27 @@ const TypeAndKeyEditor = (
 
   return (
     <div>
+      {CustomKeySelect && (
+        <div style={{ marginBottom: '12px' }}>
+          <label style={{ marginBottom: 0 }}>
+            {i18n('fieldName')}
+            <u style={{ fontSize: '0.7rem' }}>
+              (<ErrorLabel msg={i18n('require')} isError={blankKey} />+
+              <ErrorLabel msg={i18n('uniq')} isError={hasSameKey} />)
+            </u>
+            {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              <CustomKeySelect
+                value={activeSchema.key}
+                onChange={(newVal: string) =>
+                  changeSchemas([{ key: 'key', value: newVal, schemaId: activeSchema.id }])
+                }
+              />
+            }
+          </label>
+        </div>
+      )}
       {fixedFieldsList && fixedFieldsList?.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
           <label style={{ marginBottom: 0 }}>
@@ -54,7 +81,7 @@ const TypeAndKeyEditor = (
             </u>
           </label>
           <select
-            style={selectStyle}
+            style={{ ...selectStyle, background: hasSameKey || blankKey ? '#ffa19b' : 'none' }}
             value={activeSchema.key}
             onChange={(e) =>
               changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
@@ -66,7 +93,7 @@ const TypeAndKeyEditor = (
           </select>
         </div>
       )}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <div>
           <label style={{ marginBottom: 0 }}>{i18n('type')}</label>
           <select

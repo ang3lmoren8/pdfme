@@ -30,6 +30,7 @@ const TemplateEditor = ({
   onSaveTemplate,
   onChangeTemplate,
   fixedFieldsList,
+  customKeySelect,
 }: DesignerReactProps & { onChangeTemplate: (t: Template) => void }) => {
   const copiedSchemas = useRef<SchemaForUI[] | null>(null);
   const past = useRef<SchemaForUI[][]>([]);
@@ -204,13 +205,17 @@ const TemplateEditor = ({
     return destroyEvents;
   }, [initEvents, destroyEvents]);
 
+  const isFixedFieldsListUsable = !!fixedFieldsList && fixedFieldsList.length > 0;
+
   const addSchema = () => {
     const s = getInitialSchema();
     const paper = paperRefs.current[pageCursor];
     const rectTop = paper ? paper.getBoundingClientRect().top : 0;
     s.position.y = rectTop > 0 ? 0 : pageSizes[pageCursor].height / 2;
     s.data = 'text';
-    s.key = `${i18n('field')}${schemasList[pageCursor].length + 1}`;
+    s.key = isFixedFieldsListUsable
+      ? fixedFieldsList[schemasList[pageCursor].length]
+      : `${i18n('field')}${schemasList[pageCursor].length + 1}`;
     commitSchemas(schemasList[pageCursor].concat(s));
     setTimeout(() => onEdit([document.getElementById(s.id)!]));
   };
@@ -264,6 +269,7 @@ const TemplateEditor = ({
         onEditEnd={onEditEnd}
         addSchema={addSchema}
         fixedFieldsList={fixedFieldsList}
+        customKeySelect={customKeySelect}
       />
       <Main
         ref={mainRef}

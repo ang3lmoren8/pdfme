@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, ReactNode } from 'react';
 import { SchemaForUI, Size } from '@pdfme/common';
 import { RULER_HEIGHT, SIDEBAR_WIDTH } from '../../../constants';
 import { I18nContext } from '../../../contexts';
@@ -20,6 +20,7 @@ export type SidebarProps = {
   changeSchemas: (objs: { key: string; value: string | number; schemaId: string }[]) => void;
   addSchema: () => void;
   fixedFieldsList: string[] | undefined;
+  customKeySelect: ReactNode;
 };
 
 const Sidebar = (props: SidebarProps) => {
