@@ -1,5 +1,5 @@
 import React, { MutableRefObject, ReactNode, useContext } from 'react';
-import { SchemaForUI, Size, getFallbackFontName } from '@pdfme/common';
+import { SchemaForUI, Size, getFallbackFontName } from 'dt-pdfme-common';
 import { FontContext } from '../contexts';
 import { ZOOM, RULER_HEIGHT } from '../constants';
 

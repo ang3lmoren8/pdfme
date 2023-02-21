@@ -14,7 +14,7 @@ import {
   checkDesignerProps,
   checkGenerateProps,
   validateBarcodeInput,
-} from '@pdfme/common';
+} from 'dt-pdfme-common';
 
 import type {
   Lang,
@@ -37,7 +37,7 @@ import type {
   UIProps,
   PreviewProps,
   DesignerProps,
-} from '@pdfme/common';
+} from 'dt-pdfme-common';
 
 export {
   Designer,

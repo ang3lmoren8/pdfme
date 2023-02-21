@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react';
 import { OnDrag, OnResize, OnClick } from 'react-moveable';
-import { SchemaForUI, Size } from '@pdfme/common';
+import { SchemaForUI, Size } from 'dt-pdfme-common';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ZOOM, RULER_HEIGHT } from '../../../constants';
 import { usePrevious } from '../../../hooks';

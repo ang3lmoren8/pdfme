@@ -1,5 +1,5 @@
 {
-  "name": "@pdfme/ui",
+  "name": "dt-pdfme-ui",
   "version": "1.1.5",
   "sideEffects": false,
   "author": "hand-dot",
@@ -41,8 +41,8 @@
     "@dnd-kit/core": "^5.0.1",
     "@dnd-kit/sortable": "^6.0.0",
     "@heroicons/react": "^2.0.13",
-    "@pdfme/common": "^1.0.0",
     "@scena/react-guides": "^0.16.0",
+    "dt-pdfme-common": "^1.1.5",
     "hotkeys-js": "^3.8.7",
     "pdfjs-dist": "^2.12.313",
     "react": "^17.0.2",

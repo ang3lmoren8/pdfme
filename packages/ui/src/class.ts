@@ -16,7 +16,7 @@ import {
   checkInputs,
   checkUIOptions,
   checkPreviewProps,
-} from '@pdfme/common';
+} from 'dt-pdfme-common';
 import { ReactNode } from 'react';
 
 const generateColumnsAndSampledataIfNeeded = (template: Template) => {

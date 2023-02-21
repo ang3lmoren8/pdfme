@@ -1,4 +1,4 @@
-import { Lang } from '@pdfme/common';
+import { Lang } from 'dt-pdfme-common';
 import { DEFAULT_LANG } from './constants';
 
 type DictEn = typeof dictEn;
