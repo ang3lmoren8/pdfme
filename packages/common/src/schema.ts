@@ -25,6 +25,8 @@ export const CommonSchema = z.object({
   width: z.number(),
   height: z.number(),
   rotate: z.number().optional(),
+  fieldKey: z.string().optional(),
+  fieldName: z.string().optional(),
 });
 
 export const TextSchema = CommonSchema.extend({

@@ -71,6 +71,7 @@ const SelectableSortableItem = ({
       transform={transform}
       fadeIn={mountedWhileDragging}
       listeners={newListeners}
+      fieldName={schema.fieldName}
     />
   );
 };

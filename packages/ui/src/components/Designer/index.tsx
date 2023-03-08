@@ -97,6 +97,9 @@ const TemplateEditor = ({
         const tgt = acc.find((s) => s.id === schemaId)!;
         // Assign to reference
         set(tgt, key, value);
+        if (key === 'fieldKey') {
+          set(tgt, 'fieldName', value + '-' + tgt.key);
+        }
         if (key === 'type') {
           const type = String(value);
           // set default value, text or barcode
@@ -213,9 +216,11 @@ const TemplateEditor = ({
     const rectTop = paper ? paper.getBoundingClientRect().top : 0;
     s.position.y = rectTop > 0 ? 0 : pageSizes[pageCursor].height / 2;
     s.data = 'text';
-    s.key = isFixedFieldsListUsable
+    s.fieldKey = isFixedFieldsListUsable
       ? fixedFieldsList[schemasList[pageCursor].length]
       : `${i18n('field')}${schemasList[pageCursor].length + 1}`;
+    s.key = crypto.randomUUID();
+    s.fieldName = s.fieldKey + '-' + s.key;
     commitSchemas(schemasList[pageCursor].concat(s));
     setTimeout(() => onEdit([document.getElementById(s.id)!]));
   };

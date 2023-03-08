@@ -18,6 +18,7 @@ interface Props {
   transform?: { x: number; y: number; scaleX: number; scaleY: number } | null;
   fadeIn?: boolean;
   listeners?: DraggableSyntheticListeners;
+  fieldName?: string;
 }
 const Item = React.memo(
   React.forwardRef<HTMLLIElement, Props>(
@@ -37,6 +38,7 @@ const Item = React.memo(
         sorting,
         transition,
         transform,
+        fieldName,
         ...props
       },
       ref
@@ -92,11 +94,11 @@ const Item = React.memo(
               onClick={() => onClick && onClick()}
             >
               {status === undefined ? (
-                value
+                fieldName || value
               ) : (
                 <span style={{ display: 'flex', alignItems: 'center' }}>
                   <ExclamationTriangleIcon width={15} style={{ marginRight: '0.5rem' }} />
-                  {status === 'is-warning' ? i18n('noKeyName') : value}
+                  {status === 'is-warning' ? i18n('noKeyName') : fieldName || value}
                   {status === 'is-danger' ? i18n('notUniq') : ''}
                 </span>
               )}
