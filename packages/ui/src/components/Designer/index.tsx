@@ -211,6 +211,24 @@ const TemplateEditor = ({
 
   const isFixedFieldsListUsable = !!fixedFieldsList && fixedFieldsList.length > 0;
 
+  const generateKeyByField = (fieldKey: string) => {
+    return (
+      fieldKey
+        .split('.')
+        .map((t) => t[0].toUpperCase())
+        .join('') + Math.floor(Math.random() * (10000 - 1000) + 1000)
+    );
+  };
+
+  const configureSchemaKey = (schema: SchemaForUI, schemaList: SchemaForUI[]) => {
+    const key = generateKeyByField(schema.fieldKey!);
+    if (schemaList.some((s) => s.key === key)) {
+      configureSchemaKey(schema, schemaList);
+    } else {
+      schema.key = key;
+    }
+  };
+
   const addSchema = () => {
     const s = getInitialSchema();
     const paper = paperRefs.current[pageCursor];
@@ -220,7 +238,7 @@ const TemplateEditor = ({
     s.fieldKey = isFixedFieldsListUsable
       ? fixedFieldsList[schemasList[pageCursor].length]
       : `${i18n('field')}${schemasList[pageCursor].length + 1}`;
-    s.key = crypto.randomUUID();
+    configureSchemaKey(s, schemasList[pageCursor]);
     s.fieldName = s.fieldKey;
     s.data = s.fieldKey;
     commitSchemas(schemasList[pageCursor].concat(s));
