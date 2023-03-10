@@ -97,10 +97,14 @@ const TemplateEditor = ({
         const tgt = acc.find((s) => s.id === schemaId)!;
         // Assign to reference
         set(tgt, key, value);
+        if (key === 'fieldKey') {
+          set(tgt, 'fieldName', value);
+          if (tgt.type === 'text') set(tgt, 'data', value);
+        }
         if (key === 'type') {
           const type = String(value);
           // set default value, text or barcode
-          set(tgt, 'data', getSampleByType(type));
+          set(tgt, 'data', value === 'text' ? tgt.fieldKey : getSampleByType(type));
           // For barcodes, adjust the height to get the correct ratio.
           if (value !== 'text') {
             set(tgt, 'height', getKeepRatioHeightByWidth(type, tgt.width));
@@ -207,15 +211,36 @@ const TemplateEditor = ({
 
   const isFixedFieldsListUsable = !!fixedFieldsList && fixedFieldsList.length > 0;
 
+  const generateKeyByField = (fieldKey: string) => {
+    return (
+      fieldKey
+        .split('.')
+        .map((t) => t[0].toUpperCase())
+        .join('') + Math.floor(Math.random() * (10000 - 1000) + 1000)
+    );
+  };
+
+  const configureSchemaKey = (schema: SchemaForUI, schemaList: SchemaForUI[]) => {
+    const key = generateKeyByField(schema.fieldKey!);
+    if (schemaList.some((s) => s.key === key)) {
+      configureSchemaKey(schema, schemaList);
+    } else {
+      schema.key = key;
+    }
+  };
+
   const addSchema = () => {
     const s = getInitialSchema();
     const paper = paperRefs.current[pageCursor];
     const rectTop = paper ? paper.getBoundingClientRect().top : 0;
     s.position.y = rectTop > 0 ? 0 : pageSizes[pageCursor].height / 2;
-    s.data = 'text';
-    s.key = isFixedFieldsListUsable
+    // s.data = 'text';
+    s.fieldKey = isFixedFieldsListUsable
       ? fixedFieldsList[schemasList[pageCursor].length]
       : `${i18n('field')}${schemasList[pageCursor].length + 1}`;
+    configureSchemaKey(s, schemasList[pageCursor]);
+    s.fieldName = s.fieldKey;
+    s.data = s.fieldKey;
     commitSchemas(schemasList[pageCursor].concat(s));
     setTimeout(() => onEdit([document.getElementById(s.id)!]));
   };

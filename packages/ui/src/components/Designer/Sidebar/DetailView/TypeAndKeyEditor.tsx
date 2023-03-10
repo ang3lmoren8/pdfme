@@ -62,9 +62,9 @@ const TypeAndKeyEditor = (
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               <CustomKeySelect
-                value={activeSchema.key}
+                value={activeSchema.fieldKey}
                 onChange={(newVal: string) =>
-                  changeSchemas([{ key: 'key', value: newVal, schemaId: activeSchema.id }])
+                  changeSchemas([{ key: 'fieldKey', value: newVal, schemaId: activeSchema.id }])
                 }
               />
             }
@@ -82,9 +82,9 @@ const TypeAndKeyEditor = (
           </label>
           <select
             style={{ ...selectStyle, background: hasSameKey || blankKey ? '#ffa19b' : 'none' }}
-            value={activeSchema.key}
+            value={activeSchema.fieldKey}
             onChange={(e) =>
-              changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
+              changeSchemas([{ key: 'fieldKey', value: e.target.value, schemaId: activeSchema.id }])
             }
           >
             {fixedFieldsList.map((fixedField) => (
@@ -121,7 +121,9 @@ const TypeAndKeyEditor = (
           <input
             ref={inputRef}
             onChange={(e) =>
-              changeSchemas([{ key: 'key', value: e.target.value, schemaId: activeSchema.id }])
+              changeSchemas([
+                { key: 'fieldName', value: e.target.value, schemaId: activeSchema.id },
+              ])
             }
             style={{
               width: '100%',
@@ -130,7 +132,7 @@ const TypeAndKeyEditor = (
               color: '#333',
               background: hasSameKey || blankKey ? '#ffa19b' : 'none',
             }}
-            value={activeSchema.key}
+            value={activeSchema.fieldName}
           />
         </div>
       </div>
