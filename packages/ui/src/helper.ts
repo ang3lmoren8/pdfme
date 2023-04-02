@@ -244,21 +244,25 @@ export const px2mm = (px: number) => {
   return parseFloat(String(px)) * mmRatio;
 };
 
+type PageSize = {
+  height: number;
+  width: number;
+};
+
 export const getPdfPageSizes = async (pdfBlob: Blob) => {
   const url = URL.createObjectURL(pdfBlob);
   const pdfDoc = await getDocument({ url }).promise;
 
-  const promises = Promise.all(
-    new Array(pdfDoc.numPages).fill('').map(async (_, i) => {
-      const pageSize = await pdfDoc.getPage(i + 1).then((page) => {
-        const { height, width } = page.getViewport({ scale: 1 });
+  const promises: PageSize[] = [];
 
-        return { height: pt2mm(height), width: pt2mm(width) };
-      });
-
-      return pageSize;
-    })
-  );
+  for await (const i of Array.from({ length: pdfDoc.numPages }, (_, i) => i)) {
+    const pageSize = await pdfDoc.getPage(i + 1).then((page) => {
+      const { height, width } = page.getViewport({ scale: 1 });
+      const result = { height: pt2mm(height), width: pt2mm(width) };
+      return result;
+    });
+    promises[i] = pageSize;
+  }
 
   URL.revokeObjectURL(url);
 
