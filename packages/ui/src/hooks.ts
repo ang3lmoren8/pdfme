@@ -74,9 +74,13 @@ export const useScrollPageCursor = ({
     }
 
     const scroll = ref.current.scrollTop;
+
     const { top } = ref.current.getBoundingClientRect();
+
     const pageHeights = pageSizes.reduce((acc, cur, i) => {
-      let value = (cur.height * ZOOM + RULER_HEIGHT) * scale;
+      // let value = (cur.height * ZOOM + RULER_HEIGHT) * scale;
+      let value = cur.height * ZOOM * scale;
+
       if (i === 0) {
         value += top - value / 2;
       } else {
@@ -85,12 +89,15 @@ export const useScrollPageCursor = ({
 
       return acc.concat(value);
     }, [] as number[]);
+
     let _pageCursor = 0;
+
     pageHeights.forEach((ph, i) => {
       if (scroll > ph) {
         _pageCursor = i + 1 >= pageHeights.length ? pageHeights.length - 1 : i + 1;
       }
     });
+
     if (_pageCursor !== pageCursor) {
       onChangePageCursor(_pageCursor);
     }
