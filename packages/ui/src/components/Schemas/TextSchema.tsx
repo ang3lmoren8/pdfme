@@ -30,7 +30,7 @@ const TextSchemaUI = (
     lineHeight: `${schema.lineHeight ?? DEFAULT_LINE_HEIGHT}em`,
     whiteSpace: 'pre-line',
     wordBreak: 'break-all',
-    border: 'none',
+    border: schema.fieldKey === 'static' ? '1.5px solid #52C41A' : 'none',
     color: schema.fontColor ? schema.fontColor : DEFAULT_FONT_COLOR,
     backgroundColor:
       schema.data && schema.backgroundColor ? schema.backgroundColor : 'rgb(242 244 255 / 75%)',
